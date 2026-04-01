@@ -1,0 +1,30 @@
+services:
+    mundophpbb.helpdeskkb.service.manager:
+        class: mundophpbb\helpdeskkb\service\kb_manager
+        arguments:
+            - '@dbal.conn'
+            - '@config'
+            - '@user'
+            - '%core.table_prefix%'
+
+    mundophpbb.helpdeskkb.controller.main:
+        class: mundophpbb\helpdeskkb\controller\main_controller
+        arguments:
+            - '@config'
+            - '@controller.helper'
+            - '@request'
+            - '@template'
+            - '@user'
+            - '@auth'
+            - '@mundophpbb.helpdeskkb.service.manager'
+
+    mundophpbb.helpdeskkb.event.listener:
+        class: mundophpbb\helpdeskkb\event\listener
+        arguments:
+            - '@config'
+            - '@controller.helper'
+            - '@template'
+            - '@user'
+            - '@mundophpbb.helpdeskkb.service.manager'
+        tags:
+            - { name: event.listener }

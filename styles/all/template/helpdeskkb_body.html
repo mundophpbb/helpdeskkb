@@ -1,0 +1,469 @@
+<!-- INCLUDE overall_header.html -->
+
+<div class="panel">
+    <div class="inner">
+        <div class="helpdeskkb-hero helpdeskkb-hero-classic">
+            <div class="helpdeskkb-hero-text">
+                <p class="helpdeskkb-kicker">{L_HELPDESKKB_TITLE}</p>
+                <h2>{L_HELPDESKKB_TITLE}</h2>
+                <p>{L_HELPDESKKB_EXPLAIN}</p>
+            </div>
+            <div class="helpdeskkb-hero-actions">
+                <!-- IF S_HELPDESKKB_SEARCH_ACTIVE -->
+                <a class="button2" href="{U_HELPDESKKB_CLEAR_FILTERS}">{L_HELPDESKKB_CLEAR_FILTERS}</a>
+                <!-- ENDIF -->
+            </div>
+        </div>
+
+        <form method="get" action="{U_HELPDESKKB_INDEX}">
+            <div class="helpdeskkb-toolbar">
+                <div class="helpdeskkb-field">
+                    <label for="helpdeskkb-q">{L_HELPDESKKB_SEARCH}</label>
+                    <input type="text" class="inputbox" name="q" id="helpdeskkb-q" value="{HELPDESKKB_SEARCH_QUERY}" placeholder="{L_HELPDESKKB_SEARCH_PLACEHOLDER}">
+                </div>
+                <div class="helpdeskkb-field">
+                    <label for="helpdeskkb-category">{L_HELPDESKKB_FILTER_CATEGORY}</label>
+                    <select name="category_id" id="helpdeskkb-category">
+                        <option value="0">{L_HELPDESKKB_ALL_CATEGORIES}</option>
+                        <!-- BEGIN kb_category_options -->
+                        <option value="{kb_category_options.VALUE}"<!-- IF kb_category_options.S_SELECTED --> selected="selected"<!-- ENDIF -->>{kb_category_options.LABEL}</option>
+                        <!-- END kb_category_options -->
+                    </select>
+                </div>
+                <!-- IF S_HELPDESKKB_QUERY_ACTIVE -->
+                <div class="helpdeskkb-field helpdeskkb-field-sort">
+                    <label for="helpdeskkb-sort">{L_HELPDESKKB_SORT_BY}</label>
+                    <select name="sort" id="helpdeskkb-sort">
+                        <!-- BEGIN kb_search_sort_options -->
+                        <option value="{kb_search_sort_options.VALUE}"<!-- IF kb_search_sort_options.S_SELECTED --> selected="selected"<!-- ENDIF -->>{kb_search_sort_options.LABEL}</option>
+                        <!-- END kb_search_sort_options -->
+                    </select>
+                </div>
+                <!-- ENDIF -->
+                <div class="helpdeskkb-actions">
+                    <input class="button1" type="submit" value="{L_HELPDESKKB_SEARCH_SUBMIT}">
+                </div>
+            </div>
+        </form>
+
+        <div class="helpdeskkb-stats">
+            <span class="helpdeskkb-pill"><strong>{L_HELPDESKKB_TOTAL_CATEGORIES}</strong>{L_COLON} {HELPDESKKB_TOTAL_CATEGORIES}</span>
+            <span class="helpdeskkb-pill"><strong>{L_HELPDESKKB_TOTAL_ARTICLES}</strong>{L_COLON} {HELPDESKKB_TOTAL_ARTICLES}</span>
+            <span class="helpdeskkb-pill"><strong>{L_HELPDESKKB_VISIBLE_CATEGORIES}</strong>{L_COLON} {HELPDESKKB_VISIBLE_CATEGORIES}</span>
+            <span class="helpdeskkb-pill"><strong>{L_HELPDESKKB_VISIBLE_ARTICLES}</strong>{L_COLON} {HELPDESKKB_VISIBLE_ARTICLES}</span>
+        </div>
+
+        <!-- IF S_HELPDESKKB_SEARCH_ACTIVE -->
+        <div class="helpdeskkb-meta">
+            <span class="helpdeskkb-pill">{HELPDESKKB_RESULTS_TEXT}</span>
+            <!-- IF HELPDESKKB_SEARCH_TEXT --><span class="helpdeskkb-pill">{HELPDESKKB_SEARCH_TEXT}</span><!-- ENDIF -->
+            <!-- IF HELPDESKKB_FILTER_CATEGORY_TEXT --><span class="helpdeskkb-pill">{HELPDESKKB_FILTER_CATEGORY_TEXT}</span><!-- ENDIF -->
+        </div>
+        <!-- IF S_HELPDESKKB_HAS_ACTIVE_FILTERS -->
+        <div class="helpdeskkb-active-filters">
+            <span class="helpdeskkb-active-filters-label">{L_HELPDESKKB_ACTIVE_FILTERS}</span>
+            <!-- BEGIN kb_active_filters -->
+            <span class="helpdeskkb-filter-chip">{kb_active_filters.LABEL} <a href="{kb_active_filters.U_REMOVE}" aria-label="{L_HELPDESKKB_REMOVE_FILTER}">&times;</a></span>
+            <!-- END kb_active_filters -->
+        </div>
+        <!-- ENDIF -->
+        <!-- ENDIF -->
+    </div>
+</div>
+
+<!-- IF not S_HELPDESKKB_HAS_CATEGORIES and not S_HELPDESKKB_NO_SEARCH_RESULTS -->
+<div class="panel">
+    <div class="inner helpdeskkb-empty">
+        <p><!-- IF S_HELPDESKKB_SEARCH_ACTIVE -->{L_HELPDESKKB_NO_MATCHES}<!-- ELSE -->{L_HELPDESKKB_NO_CATEGORIES}<!-- ENDIF --></p>
+    </div>
+</div>
+<!-- ENDIF -->
+
+<!-- IF S_HELPDESKKB_SEARCH_ACTIVE -->
+    <!-- IF S_HELPDESKKB_QUERY_ACTIVE -->
+    <!-- IF S_HELPDESKKB_NO_SEARCH_RESULTS -->
+    <div class="panel bg2 helpdeskkb-section-panel">
+        <div class="inner helpdeskkb-no-results">
+            <div class="helpdeskkb-section-head">
+                <div>
+                    <p class="helpdeskkb-kicker">{L_HELPDESKKB_SEARCH_RESULTS}</p>
+                    <h3 class="helpdeskkb-section-title">{L_HELPDESKKB_NO_RESULTS_TITLE}</h3>
+                    <p class="helpdeskkb-muted">{L_HELPDESKKB_NO_RESULTS_EXPLAIN}</p>
+                </div>
+            </div>
+
+            <div class="helpdeskkb-no-results-actions">
+                <a class="button1" href="{U_HELPDESKKB_NO_RESULTS_BROWSE_ALL}">{L_HELPDESKKB_NO_RESULTS_BROWSE_ALL}</a>
+                <!-- IF U_HELPDESKKB_NO_RESULTS_BROWSE_CATEGORY -->
+                <a class="button2" href="{U_HELPDESKKB_NO_RESULTS_BROWSE_CATEGORY}">{L_HELPDESKKB_NO_RESULTS_BROWSE_CATEGORY}</a>
+                <!-- ENDIF -->
+            </div>
+
+            <!-- IF .kb_no_result_tips -->
+            <div class="helpdeskkb-no-results-tips">
+                <h4>{L_HELPDESKKB_NO_RESULTS_TIPS_TITLE}</h4>
+                <ul class="helpdeskkb-link-list helpdeskkb-link-list-compact">
+                <!-- BEGIN kb_no_result_tips -->
+                    <li>{kb_no_result_tips.TEXT}</li>
+                <!-- END kb_no_result_tips -->
+                </ul>
+            </div>
+            <!-- ENDIF -->
+
+            <div class="helpdeskkb-no-results-grid">
+                <div class="helpdeskkb-no-results-col">
+                    <h4>{L_HELPDESKKB_HELPFUL_ARTICLES}</h4>
+                    <!-- IF S_HELPDESKKB_HAS_HELPFUL -->
+                    <ul class="helpdeskkb-link-list helpdeskkb-link-list-side">
+                    <!-- BEGIN kb_helpful_articles -->
+                        <li>
+                            <a class="helpdeskkb-article-item-title" href="{kb_helpful_articles.U_ARTICLE}">{kb_helpful_articles.ARTICLE_TITLE}</a>
+                            <span class="helpdeskkb-list-meta">{kb_helpful_articles.CATEGORY_NAME} • {kb_helpful_articles.ARTICLE_HELPFUL_YES} {L_HELPDESKKB_HELPFUL_YES_LABEL}</span>
+                        </li>
+                    <!-- END kb_helpful_articles -->
+                    </ul>
+                    <!-- ELSE -->
+                    <p class="helpdeskkb-muted">{L_HELPDESKKB_NO_ARTICLES}</p>
+                    <!-- ENDIF -->
+                </div>
+                <div class="helpdeskkb-no-results-col">
+                    <h4>{L_HELPDESKKB_POPULAR_TOPICS}</h4>
+                    <!-- IF S_HELPDESKKB_HAS_HOME_KEYWORDS -->
+                    <div class="helpdeskkb-keyword-cloud">
+                    <!-- BEGIN kb_home_keywords -->
+                        <a class="helpdeskkb-keyword-chip" href="{kb_home_keywords.U_SEARCH}">{kb_home_keywords.KEYWORD}</a>
+                    <!-- END kb_home_keywords -->
+                    </div>
+                    <!-- ELSE -->
+                    <p class="helpdeskkb-muted">{L_HELPDESKKB_NO_KEYWORDS}</p>
+                    <!-- ENDIF -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ELSE -->
+    <div class="helpdeskkb-two-col">
+        <div class="helpdeskkb-two-col-main">
+            <div class="panel bg2 helpdeskkb-section-panel">
+                <div class="inner">
+                    <div class="helpdeskkb-section-head">
+                        <div>
+                            <p class="helpdeskkb-kicker">{L_HELPDESKKB_SEARCH_RESULTS}</p>
+                            <h3 class="helpdeskkb-section-title">{HELPDESKKB_SEARCH_RESULT_COUNT} {L_HELPDESKKB_SEARCH_RESULTS_COUNT_LABEL}</h3>
+                            <p class="helpdeskkb-muted">{L_HELPDESKKB_SEARCH_RESULTS_EXPLAIN}</p>
+                        </div>
+                        <!-- IF HELPDESKKB_SEARCH_PAGE_TEXT -->
+                        <div class="helpdeskkb-meta">
+                            <span class="helpdeskkb-pill">{HELPDESKKB_SEARCH_PAGE_TEXT}</span>
+                        </div>
+                        <!-- ENDIF -->
+                    </div>
+
+                    <ul class="helpdeskkb-search-results">
+                    <!-- BEGIN kb_search_results -->
+                        <li class="helpdeskkb-search-result-item">
+                            <a class="helpdeskkb-article-item-title" href="{kb_search_results.U_ARTICLE}">{kb_search_results.ARTICLE_TITLE_DISPLAY}</a>
+                            <div class="helpdeskkb-list-meta">
+                                <a href="{kb_search_results.U_CATEGORY}">{kb_search_results.CATEGORY_NAME_DISPLAY}</a>
+                                <!-- IF kb_search_results.ARTICLE_UPDATED_AT --> • {kb_search_results.ARTICLE_UPDATED_AT}<!-- ENDIF -->
+                                <!-- IF kb_search_results.ARTICLE_VIEWS --> • {kb_search_results.ARTICLE_VIEWS} {L_HELPDESKKB_VIEWS_LABEL}<!-- ENDIF -->
+                                • {kb_search_results.ARTICLE_HELPFUL_YES} {L_HELPDESKKB_HELPFUL_YES_LABEL}
+                            </div>
+                            <!-- IF kb_search_results.ARTICLE_SUMMARY -->
+                            <p class="helpdeskkb-search-snippet">{kb_search_results.ARTICLE_SUMMARY_DISPLAY}</p>
+                            <!-- ENDIF -->
+                        </li>
+                    <!-- END kb_search_results -->
+                    </ul>
+
+                    <!-- IF S_HELPDESKKB_SEARCH_HAS_PAGINATION -->
+                    <div class="helpdeskkb-pagination">
+                        <!-- IF S_HELPDESKKB_SEARCH_HAS_PREV_PAGE --><a class="button2" href="{U_HELPDESKKB_SEARCH_PAGE_PREV}">{L_PREVIOUS}</a><!-- ENDIF -->
+                        <div class="helpdeskkb-pagination-pages">
+                            <!-- BEGIN kb_search_page_rows -->
+                                <!-- IF kb_search_page_rows.S_ELLIPSIS -->
+                                <span class="helpdeskkb-page-current helpdeskkb-page-ellipsis">{kb_search_page_rows.PAGE_LABEL}</span>
+                                <!-- ELSEIF kb_search_page_rows.S_CURRENT -->
+                                <span class="helpdeskkb-page-current">{kb_search_page_rows.PAGE_LABEL}</span>
+                                <!-- ELSE -->
+                                <a class="helpdeskkb-page-link" href="{kb_search_page_rows.U_PAGE}">{kb_search_page_rows.PAGE_LABEL}</a>
+                                <!-- ENDIF -->
+                            <!-- END kb_search_page_rows -->
+                        </div>
+                        <!-- IF S_HELPDESKKB_SEARCH_HAS_NEXT_PAGE --><a class="button2" href="{U_HELPDESKKB_SEARCH_PAGE_NEXT}">{L_NEXT}</a><!-- ENDIF -->
+                    </div>
+                    <!-- ENDIF -->
+                </div>
+            </div>
+        </div>
+
+        <aside class="helpdeskkb-two-col-side">
+            <div class="panel bg2 helpdeskkb-section-panel helpdeskkb-side-panel">
+                <div class="inner">
+                    <p class="helpdeskkb-kicker">{L_HELPDESKKB_SEARCH_RESULTS}</p>
+                    <h3 class="helpdeskkb-section-title">{L_HELPDESKKB_SEARCH_RESULTS}</h3>
+                    <div class="helpdeskkb-side-stats">
+                        <div class="helpdeskkb-side-stat"><span>{L_HELPDESKKB_SEARCH_RESULTS}</span><strong>{HELPDESKKB_SEARCH_RESULTS_TOTAL}</strong></div>
+                        <!-- IF HELPDESKKB_SEARCH_TEXT --><div class="helpdeskkb-side-stat"><span>{L_HELPDESKKB_SEARCH}</span><strong>{HELPDESKKB_SEARCH_TEXT}</strong></div><!-- ENDIF -->
+                        <!-- IF HELPDESKKB_FILTER_CATEGORY_TEXT --><div class="helpdeskkb-side-stat"><span>{L_HELPDESKKB_FILTER_CATEGORY}</span><strong>{HELPDESKKB_FILTER_CATEGORY_TEXT}</strong></div><!-- ENDIF -->
+                        <!-- IF HELPDESKKB_SEARCH_PAGE_TEXT --><div class="helpdeskkb-side-stat"><span>{L_PAGE}</span><strong>{HELPDESKKB_SEARCH_PAGE_TEXT}</strong></div><!-- ENDIF -->
+                    </div>
+                    <div class="helpdeskkb-side-actions">
+                        <a class="button2" href="{U_HELPDESKKB_CLEAR_FILTERS}">{L_HELPDESKKB_CLEAR_FILTERS}</a>
+                        <a class="button1" href="{U_HELPDESKKB_INDEX}">{L_HELPDESKKB_BACK_TO_INDEX}</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IF S_HELPDESKKB_HAS_ACTIVE_FILTERS -->
+            <div class="panel bg2 helpdeskkb-section-panel helpdeskkb-side-panel">
+                <div class="inner">
+                    <p class="helpdeskkb-kicker">{L_HELPDESKKB_ACTIVE_FILTERS}</p>
+                    <h3 class="helpdeskkb-section-title">{L_HELPDESKKB_ACTIVE_FILTERS}</h3>
+                    <div class="helpdeskkb-active-filters helpdeskkb-active-filters-side">
+                        <!-- BEGIN kb_active_filters -->
+                        <span class="helpdeskkb-filter-chip">{kb_active_filters.LABEL} <a href="{kb_active_filters.U_REMOVE}" aria-label="{L_HELPDESKKB_REMOVE_FILTER}">&times;</a></span>
+                        <!-- END kb_active_filters -->
+                    </div>
+                </div>
+            </div>
+            <!-- ENDIF -->
+
+            <div class="panel bg2 helpdeskkb-section-panel helpdeskkb-side-panel">
+                <div class="inner">
+                    <p class="helpdeskkb-kicker">{L_HELPDESKKB_POPULAR_TOPICS}</p>
+                    <h3 class="helpdeskkb-section-title">{L_HELPDESKKB_POPULAR_TOPICS}</h3>
+                    <p class="helpdeskkb-muted">{L_HELPDESKKB_CONTINUE_BROWSING}</p>
+                    <!-- IF S_HELPDESKKB_HAS_HOME_KEYWORDS -->
+                    <div class="helpdeskkb-keyword-cloud">
+                    <!-- BEGIN kb_home_keywords -->
+                        <a class="helpdeskkb-keyword-chip" href="{kb_home_keywords.U_SEARCH}">{kb_home_keywords.KEYWORD}</a>
+                    <!-- END kb_home_keywords -->
+                    </div>
+                    <!-- ELSE -->
+                    <p class="helpdeskkb-muted">{L_HELPDESKKB_NO_KEYWORDS}</p>
+                    <!-- ENDIF -->
+                </div>
+            </div>
+        </aside>
+    </div>
+    <!-- ENDIF -->
+    <!-- ELSE -->
+    <div class="helpdeskkb-stack">
+    <!-- BEGIN kb_categories -->
+        <div class="panel bg2 helpdeskkb-section-panel">
+            <div class="inner">
+                <div class="helpdeskkb-section-head">
+                    <div>
+                        <h3 class="helpdeskkb-section-title"><a href="{kb_categories.U_CATEGORY}">{kb_categories.CATEGORY_NAME}</a></h3>
+                        <!-- IF kb_categories.CATEGORY_DESC -->
+                        <p class="helpdeskkb-summary-text">{kb_categories.CATEGORY_DESC}</p>
+                        <!-- ENDIF -->
+                    </div>
+                    <div class="helpdeskkb-meta">
+                        <span class="helpdeskkb-pill">{kb_categories.ARTICLE_COUNT} {L_HELPDESKKB_CATEGORY_ARTICLE_COUNT}</span>
+                        <span class="helpdeskkb-pill">{kb_categories.CATEGORY_SCOPE_LABEL}</span>
+                    </div>
+                </div>
+
+                <!-- IF .kb_categories.kb_articles -->
+                <ul class="helpdeskkb-link-list helpdeskkb-link-list-compact">
+                <!-- BEGIN kb_articles -->
+                    <li><a class="helpdeskkb-article-item-title" href="{kb_categories.kb_articles.U_ARTICLE}">{kb_categories.kb_articles.ARTICLE_TITLE}</a></li>
+                <!-- END kb_articles -->
+                </ul>
+                <!-- ELSE -->
+                <div class="helpdeskkb-empty helpdeskkb-empty-inline">
+                    <p>{L_HELPDESKKB_NO_ARTICLES}</p>
+                </div>
+                <!-- ENDIF -->
+            </div>
+        </div>
+    <!-- END kb_categories -->
+    </div>
+    <!-- ENDIF -->
+<!-- ELSE -->
+<div class="helpdeskkb-home-layout">
+    <div class="helpdeskkb-home-main">
+        <!-- IF .kb_featured_categories -->
+        <div class="panel bg2 helpdeskkb-section-panel">
+            <div class="inner">
+                <div class="helpdeskkb-section-head">
+                    <div>
+                        <p class="helpdeskkb-kicker">{L_HELPDESKKB_START_HERE}</p>
+                        <h3 class="helpdeskkb-section-title">{L_HELPDESKKB_START_HERE}</h3>
+                        <p class="helpdeskkb-muted">{L_HELPDESKKB_START_HERE_EXPLAIN}</p>
+                    </div>
+                </div>
+
+                <div class="helpdeskkb-featured-grid">
+                <!-- BEGIN kb_featured_categories -->
+                    <div class="helpdeskkb-featured-card">
+                        <div class="helpdeskkb-featured-head">
+                            <h4><a href="{kb_featured_categories.U_CATEGORY}">{kb_featured_categories.CATEGORY_NAME}</a></h4>
+                            <span class="helpdeskkb-pill">{kb_featured_categories.ARTICLE_COUNT} {L_HELPDESKKB_CATEGORY_ARTICLE_COUNT}</span>
+                        </div>
+                        <p class="helpdeskkb-muted">{kb_featured_categories.CATEGORY_SCOPE_LABEL}</p>
+                        <!-- IF kb_featured_categories.S_HAS_FEATURED_ARTICLE -->
+                        <div class="helpdeskkb-featured-article">
+                            <span class="helpdeskkb-home-badge">{kb_featured_categories.FEATURED_ARTICLE_LABEL}</span>
+                            <a class="helpdeskkb-article-item-title" href="{kb_featured_categories.U_FEATURED_ARTICLE}">{kb_featured_categories.FEATURED_ARTICLE_TITLE}</a>
+                        </div>
+                        <!-- ENDIF -->
+                    </div>
+                <!-- END kb_featured_categories -->
+                </div>
+            </div>
+        </div>
+        <!-- ENDIF -->
+
+        <div class="panel bg2 helpdeskkb-section-panel">
+            <div class="inner">
+                <div class="helpdeskkb-section-head">
+                    <div>
+                        <p class="helpdeskkb-kicker">{L_HELPDESKKB_BROWSE_CATEGORIES}</p>
+                        <h3 class="helpdeskkb-section-title">{L_HELPDESKKB_BROWSE_CATEGORIES}</h3>
+                        <p class="helpdeskkb-muted">{L_HELPDESKKB_BROWSE_CATEGORIES_EXPLAIN}</p>
+                    </div>
+                </div>
+
+                <div class="helpdeskkb-category-directory helpdeskkb-home-directory-grid">
+                <!-- BEGIN kb_categories -->
+                    <div class="helpdeskkb-category-row">
+                        <div class="helpdeskkb-category-head">
+                            <div class="helpdeskkb-category-title-wrap">
+                                <h4><a href="{kb_categories.U_CATEGORY}">{kb_categories.CATEGORY_NAME}</a></h4>
+                                <!-- IF kb_categories.CATEGORY_DESC -->
+                                <p class="helpdeskkb-summary-text">{kb_categories.CATEGORY_DESC}</p>
+                                <!-- ENDIF -->
+                            </div>
+                            <div class="helpdeskkb-category-meta">
+                                <span class="helpdeskkb-pill">{kb_categories.ARTICLE_COUNT} {L_HELPDESKKB_CATEGORY_ARTICLE_COUNT}</span>
+                                <span class="helpdeskkb-pill">{kb_categories.CATEGORY_SCOPE_LABEL}</span>
+                            </div>
+                        </div>
+
+                        <!-- IF kb_categories.S_HAS_FEATURED_ARTICLE -->
+                        <div class="helpdeskkb-category-lead">
+                            <span class="helpdeskkb-home-badge">{kb_categories.FEATURED_ARTICLE_LABEL}</span>
+                            <a class="helpdeskkb-category-lead-title" href="{kb_categories.U_FEATURED_ARTICLE}">{kb_categories.FEATURED_ARTICLE_TITLE}</a>
+                            <!-- IF kb_categories.FEATURED_ARTICLE_SUMMARY -->
+                            <p class="helpdeskkb-summary-text">{kb_categories.FEATURED_ARTICLE_SUMMARY}</p>
+                            <!-- ENDIF -->
+                            <!-- IF kb_categories.FEATURED_ARTICLE_META -->
+                            <span class="helpdeskkb-list-meta">{kb_categories.FEATURED_ARTICLE_META}</span>
+                            <!-- ENDIF -->
+                        </div>
+                        <!-- ENDIF -->
+
+                        <!-- IF .kb_categories.kb_articles -->
+                        <ul class="helpdeskkb-link-list helpdeskkb-link-list-compact">
+                        <!-- BEGIN kb_articles -->
+                            <li>
+                                <a class="helpdeskkb-article-item-title" href="{kb_categories.kb_articles.U_ARTICLE}">{kb_categories.kb_articles.ARTICLE_TITLE}</a>
+                                <!-- IF kb_categories.kb_articles.ARTICLE_BADGE -->
+                                <span class="helpdeskkb-inline-badge">{kb_categories.kb_articles.ARTICLE_BADGE}</span>
+                                <!-- ENDIF -->
+                            </li>
+                        <!-- END kb_articles -->
+                        </ul>
+                        <!-- ELSEIF not kb_categories.S_HAS_FEATURED_ARTICLE -->
+                        <div class="helpdeskkb-empty helpdeskkb-empty-inline">
+                            <p>{L_HELPDESKKB_NO_ARTICLES}</p>
+                        </div>
+                        <!-- ENDIF -->
+
+                        <div class="helpdeskkb-row-link">
+                            <a href="{kb_categories.U_CATEGORY}">{L_HELPDESKKB_VIEW_ALL_IN_CATEGORY}</a>
+                        </div>
+                    </div>
+                <!-- END kb_categories -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <aside class="helpdeskkb-home-side">
+        <div class="panel bg2 helpdeskkb-section-panel helpdeskkb-side-panel">
+            <div class="inner">
+                <p class="helpdeskkb-kicker">{L_HELPDESKKB_POPULAR_ARTICLES}</p>
+                <h3 class="helpdeskkb-section-title">{L_HELPDESKKB_POPULAR_ARTICLES}</h3>
+                <p class="helpdeskkb-muted">{L_HELPDESKKB_CONTINUE_BROWSING}</p>
+                <!-- IF S_HELPDESKKB_HAS_POPULAR -->
+                <ul class="helpdeskkb-link-list helpdeskkb-link-list-side">
+                <!-- BEGIN kb_popular_articles -->
+                    <li>
+                        <a class="helpdeskkb-article-item-title" href="{kb_popular_articles.U_ARTICLE}">{kb_popular_articles.ARTICLE_TITLE}</a>
+                        <span class="helpdeskkb-list-meta">{kb_popular_articles.CATEGORY_NAME} • {kb_popular_articles.ARTICLE_VIEWS} {L_HELPDESKKB_VIEWS_LABEL}</span>
+                    </li>
+                <!-- END kb_popular_articles -->
+                </ul>
+                <!-- ELSE -->
+                <p class="helpdeskkb-muted">{L_HELPDESKKB_NO_ARTICLES}</p>
+                <!-- ENDIF -->
+            </div>
+        </div>
+
+        <div class="panel bg2 helpdeskkb-section-panel helpdeskkb-side-panel">
+            <div class="inner">
+                <p class="helpdeskkb-kicker">{L_HELPDESKKB_HELPFUL_ARTICLES}</p>
+                <h3 class="helpdeskkb-section-title">{L_HELPDESKKB_HELPFUL_ARTICLES}</h3>
+                <p class="helpdeskkb-muted">{L_HELPDESKKB_CONTINUE_BROWSING}</p>
+                <!-- IF S_HELPDESKKB_HAS_HELPFUL -->
+                <ul class="helpdeskkb-link-list helpdeskkb-link-list-side">
+                <!-- BEGIN kb_helpful_articles -->
+                    <li>
+                        <a class="helpdeskkb-article-item-title" href="{kb_helpful_articles.U_ARTICLE}">{kb_helpful_articles.ARTICLE_TITLE}</a>
+                        <span class="helpdeskkb-list-meta">{kb_helpful_articles.CATEGORY_NAME} • {kb_helpful_articles.ARTICLE_HELPFUL_YES} {L_HELPDESKKB_HELPFUL_YES_LABEL}</span>
+                    </li>
+                <!-- END kb_helpful_articles -->
+                </ul>
+                <!-- ELSE -->
+                <p class="helpdeskkb-muted">{L_HELPDESKKB_NO_ARTICLES}</p>
+                <!-- ENDIF -->
+            </div>
+        </div>
+
+        <div class="panel bg2 helpdeskkb-section-panel helpdeskkb-side-panel">
+            <div class="inner">
+                <p class="helpdeskkb-kicker">{L_HELPDESKKB_RECENT_ARTICLES}</p>
+                <h3 class="helpdeskkb-section-title">{L_HELPDESKKB_RECENT_ARTICLES}</h3>
+                <p class="helpdeskkb-muted">{L_HELPDESKKB_CONTINUE_BROWSING}</p>
+                <!-- IF S_HELPDESKKB_HAS_RECENT -->
+                <ul class="helpdeskkb-link-list helpdeskkb-link-list-side">
+                <!-- BEGIN kb_recent_articles -->
+                    <li>
+                        <a class="helpdeskkb-article-item-title" href="{kb_recent_articles.U_ARTICLE}">{kb_recent_articles.ARTICLE_TITLE}</a>
+                        <span class="helpdeskkb-list-meta">{kb_recent_articles.CATEGORY_NAME}<!-- IF kb_recent_articles.ARTICLE_UPDATED_AT --> • {kb_recent_articles.ARTICLE_UPDATED_AT}<!-- ENDIF --></span>
+                    </li>
+                <!-- END kb_recent_articles -->
+                </ul>
+                <!-- ELSE -->
+                <p class="helpdeskkb-muted">{L_HELPDESKKB_NO_ARTICLES}</p>
+                <!-- ENDIF -->
+            </div>
+        </div>
+
+
+        <div class="panel bg2 helpdeskkb-section-panel helpdeskkb-side-panel">
+            <div class="inner">
+                <p class="helpdeskkb-kicker">{L_HELPDESKKB_POPULAR_TOPICS}</p>
+                <h3 class="helpdeskkb-section-title">{L_HELPDESKKB_POPULAR_TOPICS}</h3>
+                <p class="helpdeskkb-muted">{L_HELPDESKKB_BROWSE_CATEGORIES_EXPLAIN}</p>
+                <!-- IF S_HELPDESKKB_HAS_HOME_KEYWORDS -->
+                <div class="helpdeskkb-keyword-cloud">
+                <!-- BEGIN kb_home_keywords -->
+                    <a class="helpdeskkb-keyword-chip" href="{kb_home_keywords.U_SEARCH}">{kb_home_keywords.KEYWORD}</a>
+                <!-- END kb_home_keywords -->
+                </div>
+                <!-- ELSE -->
+                <p class="helpdeskkb-muted">{L_HELPDESKKB_NO_KEYWORDS}</p>
+                <!-- ENDIF -->
+            </div>
+        </div>
+
+    </aside>
+</div>
+<!-- ENDIF -->
+
+<!-- INCLUDE overall_footer.html -->

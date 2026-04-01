@@ -1,0 +1,34 @@
+mundophpbb_helpdeskkb_index_controller:
+    path: /helpdesk/kb
+    defaults: { _controller: mundophpbb.helpdeskkb.controller.main:index }
+
+mundophpbb_helpdeskkb_category_controller:
+    path: /helpdesk/kb/category/{category_id}
+    defaults: { _controller: mundophpbb.helpdeskkb.controller.main:category, category_id: 0, slug: '' }
+    requirements:
+        category_id: '\d+'
+
+mundophpbb_helpdeskkb_category_slug_controller:
+    path: /helpdesk/kb/category/{category_id}/{slug}
+    defaults: { _controller: mundophpbb.helpdeskkb.controller.main:category, category_id: 0, slug: '' }
+    requirements:
+        category_id: '\d+'
+
+mundophpbb_helpdeskkb_article_controller:
+    path: /helpdesk/kb/article/{article_id}
+    defaults: { _controller: mundophpbb.helpdeskkb.controller.main:article, article_id: 0, slug: '' }
+    requirements:
+        article_id: '\d+'
+
+mundophpbb_helpdeskkb_article_slug_controller:
+    path: /helpdesk/kb/article/{article_id}/{slug}
+    defaults: { _controller: mundophpbb.helpdeskkb.controller.main:article, article_id: 0, slug: '' }
+    requirements:
+        article_id: '\d+'
+
+
+mundophpbb_helpdeskkb_posting_suggestions_controller:
+    path: /helpdesk/kb/suggest/{forum_id}
+    defaults: { _controller: mundophpbb.helpdeskkb.controller.main:posting_suggestions, forum_id: 0 }
+    requirements:
+        forum_id: '\d+'

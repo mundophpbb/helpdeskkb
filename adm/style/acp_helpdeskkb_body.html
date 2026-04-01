@@ -1,0 +1,670 @@
+<!-- INCLUDE overall_header.html -->
+
+<h1>{L_ACP_HELPDESKKB_TITLE}</h1>
+<p>{L_ACP_HELPDESKKB_EXPLAIN}</p>
+
+<!-- IF S_HAS_MESSAGE -->
+<div class="successbox">
+    <p>{MESSAGE_TEXT}</p>
+</div>
+<!-- ENDIF -->
+
+<!-- IF S_HAS_ERROR -->
+<div class="errorbox">
+    <p>{ERROR_TEXT}</p>
+</div>
+<!-- ENDIF -->
+
+<!-- IF S_TAB_SETTINGS -->
+<h2>{L_ACP_HELPDESKKB_TAB_SETTINGS}</h2>
+<form id="acp_helpdeskkb_settings" method="post" action="{U_ACTION}">
+    <fieldset>
+        <dl>
+            <dt><label for="helpdeskkb_enabled">{L_ACP_HELPDESKKB_ENABLE}</label><br><span>{L_ACP_HELPDESKKB_ENABLE_EXPLAIN}</span></dt>
+            <dd>
+                <label><input type="radio" id="helpdeskkb_enabled" name="helpdeskkb_enabled" value="1"<!-- IF HELPDESKKB_ENABLED --> checked="checked"<!-- ENDIF -->> {L_YES}</label>
+                <label><input type="radio" name="helpdeskkb_enabled" value="0"<!-- IF not HELPDESKKB_ENABLED --> checked="checked"<!-- ENDIF -->> {L_NO}</label>
+            </dd>
+        </dl>
+        <dl>
+            <dt><label for="helpdeskkb_navbar">{L_ACP_HELPDESKKB_NAVBAR}</label><br><span>{L_ACP_HELPDESKKB_NAVBAR_EXPLAIN}</span></dt>
+            <dd>
+                <label><input type="radio" id="helpdeskkb_navbar" name="helpdeskkb_navbar" value="1"<!-- IF HELPDESKKB_NAVBAR --> checked="checked"<!-- ENDIF -->> {L_YES}</label>
+                <label><input type="radio" name="helpdeskkb_navbar" value="0"<!-- IF not HELPDESKKB_NAVBAR --> checked="checked"<!-- ENDIF -->> {L_NO}</label>
+            </dd>
+        </dl>
+        <dl>
+            <dt><label>{L_ACP_HELPDESKKB_MODE}</label><br><span>{L_ACP_HELPDESKKB_MODE_EXPLAIN}</span></dt>
+            <dd>
+                <label><input type="radio" name="helpdeskkb_mode" value="standalone"<!-- IF S_HELPDESKKB_MODE_STANDALONE --> checked="checked"<!-- ENDIF -->> {L_ACP_HELPDESKKB_MODE_STANDALONE}</label>
+                <label><input type="radio" name="helpdeskkb_mode" value="integrated"<!-- IF S_HELPDESKKB_MODE_INTEGRATED --> checked="checked"<!-- ENDIF -->> {L_ACP_HELPDESKKB_MODE_INTEGRATED}</label>
+            </dd>
+        </dl>
+        <dl>
+            <dt><label>{L_ACP_HELPDESKKB_MODE_CURRENT}</label></dt>
+            <dd><!-- IF S_HELPDESKKB_MODE_STANDALONE -->{L_ACP_HELPDESKKB_MODE_STANDALONE_CURRENT}<!-- ELSE -->{L_ACP_HELPDESKKB_MODE_INTEGRATED_CURRENT}<!-- ENDIF --></dd>
+        </dl>
+        <!-- IF S_HELPDESKKB_MODE_INTEGRATED -->
+        <dl>
+            <dt><label for="helpdeskkb_suggestions_enabled">{L_ACP_HELPDESKKB_SUGGESTIONS}</label><br><span>{L_ACP_HELPDESKKB_SUGGESTIONS_EXPLAIN}</span></dt>
+            <dd>
+                <label><input type="radio" id="helpdeskkb_suggestions_enabled" name="helpdeskkb_suggestions_enabled" value="1"<!-- IF HELPDESKKB_SUGGESTIONS_ENABLED --> checked="checked"<!-- ENDIF -->> {L_YES}</label>
+                <label><input type="radio" name="helpdeskkb_suggestions_enabled" value="0"<!-- IF not HELPDESKKB_SUGGESTIONS_ENABLED --> checked="checked"<!-- ENDIF -->> {L_NO}</label>
+            </dd>
+        </dl>
+        <dl>
+            <dt><label for="helpdeskkb_suggestions_limit">{L_ACP_HELPDESKKB_SUGGESTIONS_LIMIT}</label></dt>
+            <dd><input type="number" min="1" max="10" id="helpdeskkb_suggestions_limit" name="helpdeskkb_suggestions_limit" value="{HELPDESKKB_SUGGESTIONS_LIMIT}"></dd>
+        </dl>
+        <!-- ELSE -->
+        <div class="notice">
+            <p>{L_ACP_HELPDESKKB_MODE_STANDALONE_NOTE}</p>
+        </div>
+        <!-- ENDIF -->
+    </fieldset>
+    <fieldset class="submit-buttons">
+        <input class="button1" type="submit" name="submit_settings" value="{L_ACP_HELPDESKKB_SAVE}">
+        {S_FORM_TOKEN}
+    </fieldset>
+</form>
+<!-- ENDIF -->
+
+
+<!-- IF S_TAB_STATS -->
+<h2>{L_ACP_HELPDESKKB_TAB_STATS}</h2>
+<p>{L_ACP_HELPDESKKB_STATS_EXPLAIN}</p>
+
+<fieldset>
+    <legend>{L_ACP_HELPDESKKB_STATS_SUMMARY}</legend>
+    <dl>
+        <dt><label>{L_ACP_HELPDESKKB_STATS_TOTAL_CATEGORIES}</label></dt>
+        <dd>{HELPDESKKB_STATS_TOTAL_CATEGORIES}</dd>
+    </dl>
+    <dl>
+        <dt><label>{L_ACP_HELPDESKKB_STATS_ENABLED_CATEGORIES}</label></dt>
+        <dd>{HELPDESKKB_STATS_ENABLED_CATEGORIES}</dd>
+    </dl>
+    <dl>
+        <dt><label>{L_ACP_HELPDESKKB_STATS_TOTAL_ARTICLES}</label></dt>
+        <dd>{HELPDESKKB_STATS_TOTAL_ARTICLES}</dd>
+    </dl>
+    <dl>
+        <dt><label>{L_ACP_HELPDESKKB_STATS_ENABLED_ARTICLES}</label></dt>
+        <dd>{HELPDESKKB_STATS_ENABLED_ARTICLES}</dd>
+    </dl>
+    <dl>
+        <dt><label>{L_ACP_HELPDESKKB_STATS_TOTAL_VIEWS}</label></dt>
+        <dd>{HELPDESKKB_STATS_TOTAL_VIEWS}</dd>
+    </dl>
+    <dl>
+        <dt><label>{L_ACP_HELPDESKKB_STATS_AVERAGE_VIEWS}</label></dt>
+        <dd>{HELPDESKKB_STATS_AVERAGE_VIEWS}</dd>
+    </dl>
+    <dl>
+        <dt><label>{L_ACP_HELPDESKKB_STATS_HELPFUL_YES}</label></dt>
+        <dd>{HELPDESKKB_STATS_HELPFUL_YES}</dd>
+    </dl>
+    <dl>
+        <dt><label>{L_ACP_HELPDESKKB_STATS_HELPFUL_NO}</label></dt>
+        <dd>{HELPDESKKB_STATS_HELPFUL_NO}</dd>
+    </dl>
+    <dl>
+        <dt><label>{L_ACP_HELPDESKKB_STATS_HELPFUL_SCORE}</label></dt>
+        <dd>{HELPDESKKB_STATS_HELPFUL_SCORE}</dd>
+    </dl>
+</fieldset>
+
+<h2>{L_ACP_HELPDESKKB_STATS_TOP_VIEWED}</h2>
+<table class="table1 zebra-table fixed-width-table">
+    <thead>
+        <tr>
+            <th>{L_ACP_HELPDESKKB_ARTICLE_TITLE}</th>
+            <th>{L_ACP_HELPDESKKB_CATEGORY}</th>
+            <th>{L_ACP_HELPDESKKB_STATS_TOTAL_VIEWS}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- IF .stats_top_viewed -->
+        <!-- BEGIN stats_top_viewed -->
+        <tr>
+            <td>{stats_top_viewed.ARTICLE_TITLE}</td>
+            <td>{stats_top_viewed.CATEGORY_NAME}</td>
+            <td>{stats_top_viewed.ARTICLE_VIEWS}</td>
+        </tr>
+        <!-- END stats_top_viewed -->
+        <!-- ELSE -->
+        <tr><td colspan="3">{L_ACP_HELPDESKKB_NO_ARTICLES}</td></tr>
+        <!-- ENDIF -->
+    </tbody>
+</table>
+
+<h2>{L_ACP_HELPDESKKB_STATS_TOP_HELPFUL}</h2>
+<table class="table1 zebra-table fixed-width-table">
+    <thead>
+        <tr>
+            <th>{L_ACP_HELPDESKKB_ARTICLE_TITLE}</th>
+            <th>{L_ACP_HELPDESKKB_CATEGORY}</th>
+            <th>{L_ACP_HELPDESKKB_STATS_HELPFUL_SCORE}</th>
+            <th>{L_ACP_HELPDESKKB_HELPFUL_YES}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- IF .stats_top_helpful -->
+        <!-- BEGIN stats_top_helpful -->
+        <tr>
+            <td>{stats_top_helpful.ARTICLE_TITLE}</td>
+            <td>{stats_top_helpful.CATEGORY_NAME}</td>
+            <td>{stats_top_helpful.HELPFUL_SCORE}</td>
+            <td>{stats_top_helpful.HELPFUL_YES}</td>
+        </tr>
+        <!-- END stats_top_helpful -->
+        <!-- ELSE -->
+        <tr><td colspan="4">{L_ACP_HELPDESKKB_NO_ARTICLES}</td></tr>
+        <!-- ENDIF -->
+    </tbody>
+</table>
+
+<h2>{L_ACP_HELPDESKKB_STATS_TOP_CATEGORIES}</h2>
+<table class="table1 zebra-table fixed-width-table">
+    <thead>
+        <tr>
+            <th>{L_ACP_HELPDESKKB_CATEGORY}</th>
+            <th>{L_ACP_HELPDESKKB_CATEGORY_ARTICLE_COUNT}</th>
+            <th>{L_ACP_HELPDESKKB_STATS_TOTAL_VIEWS}</th>
+            <th>{L_ACP_HELPDESKKB_ENABLED}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- IF .stats_categories -->
+        <!-- BEGIN stats_categories -->
+        <tr>
+            <td>{stats_categories.CATEGORY_NAME}</td>
+            <td>{stats_categories.ARTICLE_COUNT}</td>
+            <td>{stats_categories.CATEGORY_VIEWS}</td>
+            <td>{stats_categories.CATEGORY_ENABLED}</td>
+        </tr>
+        <!-- END stats_categories -->
+        <!-- ELSE -->
+        <tr><td colspan="4">{L_ACP_HELPDESKKB_NO_CATEGORIES}</td></tr>
+        <!-- ENDIF -->
+    </tbody>
+</table>
+<!-- ENDIF -->
+
+<!-- IF S_TAB_CATEGORIES -->
+<h2>{L_ACP_HELPDESKKB_TAB_CATEGORIES}</h2>
+<p>{L_ACP_HELPDESKKB_CATEGORIES_CREATED_EXPLAIN}</p>
+
+<div class="submit-buttons" style="margin: 0 0 12px;">
+    <a class="button1" href="{U_CATEGORY_NEW}">{L_ACP_HELPDESKKB_TAB_NEW_CATEGORY}</a>
+</div>
+
+
+<p>{L_ACP_HELPDESKKB_LIST_RANGE}{L_COLON} {CATEGORY_RESULTS_FROM}&ndash;{CATEGORY_RESULTS_TO} / {CATEGORY_RESULTS_TOTAL}</p>
+
+<!-- IF S_HAS_CATEGORY_PAGINATION -->
+<div class="pagination" style="margin: 0 0 10px;">
+    <!-- IF S_HAS_CATEGORY_PREV_PAGE --><a href="{U_CATEGORY_PAGE_PREV}">{L_PREVIOUS}</a><!-- ENDIF -->
+    <!-- BEGIN category_page_rows -->
+        <!-- IF category_page_rows.S_CURRENT --><strong>{category_page_rows.PAGE_NUMBER}</strong><!-- ELSE --><a href="{category_page_rows.U_PAGE}">{category_page_rows.PAGE_NUMBER}</a><!-- ENDIF -->
+    <!-- END category_page_rows -->
+    <!-- IF S_HAS_CATEGORY_NEXT_PAGE --><a href="{U_CATEGORY_PAGE_NEXT}">{L_NEXT}</a><!-- ENDIF -->
+</div>
+<!-- ENDIF -->
+
+<table class="table1 zebra-table fixed-width-table">
+    <thead>
+        <tr>
+            <th>{L_ACP_HELPDESKKB_CATEGORY_NAME}</th>
+            <th>{L_ACP_HELPDESKKB_TARGET}</th>
+            <th>{L_ACP_HELPDESKKB_SORT_ORDER}</th>
+            <th>{L_ACP_HELPDESKKB_CATEGORY_ARTICLE_COUNT}</th>
+            <th>{L_ACP_HELPDESKKB_ENABLED}</th>
+            <th>{L_ACP_HELPDESKKB_ORDER}</th>
+            <th>{L_ACTION}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- IF S_HAS_CATEGORIES -->
+        <!-- BEGIN category_rows -->
+        <tr>
+            <td>{category_rows.CATEGORY_NAME}</td>
+            <td>{category_rows.TARGET_LABEL}</td>
+            <td>{category_rows.SORT_ORDER}</td>
+            <td>{category_rows.ARTICLE_COUNT}</td>
+            <td>{category_rows.CATEGORY_ENABLED}</td>
+            <td>
+                <!-- IF not category_rows.S_FIRST_ROW --><a href="{category_rows.U_MOVE_UP}" title="{L_ACP_HELPDESKKB_MOVE_UP}">{L_ACP_HELPDESKKB_MOVE_UP_SHORT}</a><!-- ELSE -->&ndash;<!-- ENDIF -->
+                &nbsp;|&nbsp;
+                <!-- IF not category_rows.S_LAST_ROW --><a href="{category_rows.U_MOVE_DOWN}" title="{L_ACP_HELPDESKKB_MOVE_DOWN}">{L_ACP_HELPDESKKB_MOVE_DOWN_SHORT}</a><!-- ELSE -->&ndash;<!-- ENDIF -->
+            </td>
+            <td><a href="{category_rows.U_EDIT}">{L_EDIT}</a> &nbsp;|&nbsp; <a href="{category_rows.U_VIEW_ARTICLES}">{L_ACP_HELPDESKKB_VIEW_CATEGORY_ARTICLES}</a> &nbsp;|&nbsp; <a href="{category_rows.U_VIEW_PUBLIC}">{L_ACP_HELPDESKKB_VIEW_CATEGORY}</a></td>
+        </tr>
+        <!-- END category_rows -->
+        <!-- ELSE -->
+        <tr>
+            <td colspan="7">{L_ACP_HELPDESKKB_NO_CATEGORIES}</td>
+        </tr>
+        <!-- ENDIF -->
+    </tbody>
+</table>
+
+<!-- IF S_HAS_CATEGORY_PAGINATION -->
+<div class="pagination" style="margin: 10px 0 0;">
+    <!-- IF S_HAS_CATEGORY_PREV_PAGE --><a href="{U_CATEGORY_PAGE_PREV}">{L_PREVIOUS}</a><!-- ENDIF -->
+    <!-- BEGIN category_page_rows -->
+        <!-- IF category_page_rows.S_CURRENT --><strong>{category_page_rows.PAGE_NUMBER}</strong><!-- ELSE --><a href="{category_page_rows.U_PAGE}">{category_page_rows.PAGE_NUMBER}</a><!-- ENDIF -->
+    <!-- END category_page_rows -->
+    <!-- IF S_HAS_CATEGORY_NEXT_PAGE --><a href="{U_CATEGORY_PAGE_NEXT}">{L_NEXT}</a><!-- ENDIF -->
+</div>
+<!-- ENDIF -->
+
+<!-- ENDIF -->
+
+<!-- IF S_TAB_CATEGORY_NEW -->
+<h2>{CATEGORY_FORM_TITLE}</h2>
+<p>{L_ACP_HELPDESKKB_NEW_CATEGORY_EXPLAIN}</p>
+
+<div class="submit-buttons" style="margin: 0 0 12px;">
+    <a class="button2" href="{U_CATEGORY_LIST}">{L_ACP_HELPDESKKB_TAB_CATEGORIES}</a>
+</div>
+
+<form id="acp_helpdeskkb_categories" method="post" action="{U_ACTION}">
+    <fieldset>
+        <legend>{CATEGORY_FORM_TITLE}</legend>
+        <dl>
+            <dt><label for="category_name">{L_ACP_HELPDESKKB_CATEGORY_NAME}</label></dt>
+            <dd><input type="text" class="medium" id="category_name" name="category_name" value="{CATEGORY_NAME}"></dd>
+        </dl>
+        <dl>
+            <dt><label for="category_desc">{L_ACP_HELPDESKKB_CATEGORY_DESC}</label></dt>
+            <dd><textarea id="category_desc" name="category_desc" rows="4" cols="60">{CATEGORY_DESC}</textarea></dd>
+        </dl>
+        <dl>
+            <dt><label for="category_forum_id">{L_ACP_HELPDESKKB_FORUM_ID}</label><br><span>{L_ACP_HELPDESKKB_TARGET_CATEGORY_EXPLAIN}</span></dt>
+            <dd><input type="number" id="category_forum_id" name="category_forum_id" value="{CATEGORY_FORUM_ID}"></dd>
+        </dl>
+        <dl>
+            <dt><label for="category_department_key">{L_ACP_HELPDESKKB_DEPARTMENT_KEY}</label><br><span>{L_ACP_HELPDESKKB_TARGET_CATEGORY_EXPLAIN}</span></dt>
+            <dd><input type="text" class="medium" id="category_department_key" name="category_department_key" value="{CATEGORY_DEPARTMENT_KEY}"></dd>
+        </dl>
+        <dl>
+            <dt><label for="category_sort_order">{L_ACP_HELPDESKKB_SORT_ORDER}</label></dt>
+            <dd><input type="number" id="category_sort_order" name="category_sort_order" value="{CATEGORY_SORT_ORDER}"></dd>
+        </dl>
+        <dl>
+            <dt><label>{L_ACP_HELPDESKKB_CATEGORY_SLUG}</label><br><span>{L_ACP_HELPDESKKB_CATEGORY_SLUG_EXPLAIN}</span></dt>
+            <dd><strong>{CATEGORY_PUBLIC_SLUG}</strong><!-- IF U_CATEGORY_PUBLIC --><br><a href="{U_CATEGORY_PUBLIC}">{L_ACP_HELPDESKKB_VIEW_CATEGORY}</a><!-- ENDIF --></dd>
+        </dl>
+        <dl>
+            <dt><label>{L_ACP_HELPDESKKB_ENABLED}</label></dt>
+            <dd>
+                <label><input type="radio" name="category_enabled" value="1"<!-- IF CATEGORY_ENABLED_BOOL --> checked="checked"<!-- ENDIF -->> {L_YES}</label>
+                <label><input type="radio" name="category_enabled" value="0"<!-- IF not CATEGORY_ENABLED_BOOL --> checked="checked"<!-- ENDIF -->> {L_NO}</label>
+            </dd>
+        </dl>
+        <input type="hidden" name="category_id" value="{CATEGORY_ID}">
+    </fieldset>
+    <fieldset class="submit-buttons">
+        <input class="button1" type="submit" name="save_category" value="<!-- IF S_EDIT_CATEGORY -->{L_ACP_HELPDESKKB_SAVE}<!-- ELSE -->{L_ACP_HELPDESKKB_ADD}<!-- ENDIF -->">
+        <!-- IF S_EDIT_CATEGORY -->
+        <input class="button2" type="submit" name="delete_category" value="{L_DELETE}" onclick="return confirm('{LA_ACP_HELPDESKKB_CONFIRM_DELETE_CATEGORY}');">
+        <!-- ENDIF -->
+        <a class="button2" href="<!-- IF S_EDIT_CATEGORY -->{U_CATEGORY_LIST}<!-- ELSE -->{U_CATEGORY_RESET}<!-- ENDIF -->">{L_CANCEL}</a>
+        {S_FORM_TOKEN}
+    </fieldset>
+</form>
+<!-- ENDIF -->
+
+<!-- IF S_TAB_ARTICLES -->
+<h2>{L_ACP_HELPDESKKB_TAB_ARTICLES}</h2>
+<p>{L_ACP_HELPDESKKB_ARTICLES_CREATED_EXPLAIN}</p>
+
+<div class="submit-buttons" style="margin: 0 0 12px;">
+    <a class="button1" href="{U_ARTICLE_NEW}">{L_ACP_HELPDESKKB_TAB_NEW_ARTICLE}</a>
+</div>
+
+<form id="acp_helpdeskkb_articles_filter" method="post" action="{U_ACTION}">
+    <fieldset>
+        <legend>{L_ACP_HELPDESKKB_FILTERS}</legend>
+        <dl>
+            <dt><label for="article_filter_keywords">{L_ACP_HELPDESKKB_FILTER_KEYWORDS}</label></dt>
+            <dd><input type="text" class="medium" id="article_filter_keywords" name="article_filter_keywords" value="{ARTICLE_FILTER_KEYWORDS}"></dd>
+        </dl>
+        <dl>
+            <dt><label for="article_filter_category_id">{L_ACP_HELPDESKKB_CATEGORY}</label></dt>
+            <dd>
+                <select id="article_filter_category_id" name="article_filter_category_id">
+                    <option value="0">{L_ACP_HELPDESKKB_FILTER_ALL}</option>
+                    <!-- BEGIN article_filter_category_options -->
+                    <option value="{article_filter_category_options.VALUE}"<!-- IF article_filter_category_options.S_SELECTED --> selected="selected"<!-- ENDIF -->>{article_filter_category_options.LABEL}</option>
+                    <!-- END article_filter_category_options -->
+                </select>
+            </dd>
+        </dl>
+        <dl>
+            <dt><label for="article_filter_forum_id">{L_ACP_HELPDESKKB_FORUM_ID}</label></dt>
+            <dd><input type="number" id="article_filter_forum_id" name="article_filter_forum_id" value="{ARTICLE_FILTER_FORUM_ID}"></dd>
+        </dl>
+        <dl>
+            <dt><label for="article_filter_department_key">{L_ACP_HELPDESKKB_DEPARTMENT_KEY}</label></dt>
+            <dd><input type="text" class="medium" id="article_filter_department_key" name="article_filter_department_key" value="{ARTICLE_FILTER_DEPARTMENT_KEY}"></dd>
+        </dl>
+        <dl>
+            <dt><label for="article_filter_enabled">{L_ACP_HELPDESKKB_ENABLED}</label></dt>
+            <dd>
+                <select id="article_filter_enabled" name="article_filter_enabled">
+                    <option value=""<!-- IF ARTICLE_FILTER_ENABLED eq '' --> selected="selected"<!-- ENDIF -->>{L_ACP_HELPDESKKB_FILTER_ALL}</option>
+                    <option value="1"<!-- IF ARTICLE_FILTER_ENABLED eq '1' --> selected="selected"<!-- ENDIF -->>{L_YES}</option>
+                    <option value="0"<!-- IF ARTICLE_FILTER_ENABLED eq '0' --> selected="selected"<!-- ENDIF -->>{L_NO}</option>
+                </select>
+            </dd>
+        </dl>
+    </fieldset>
+    <fieldset class="submit-buttons">
+        <input class="button1" type="submit" name="filter_articles" value="{L_ACP_HELPDESKKB_APPLY_FILTERS}">
+        <a class="button2" href="{U_ARTICLE_LIST}">{L_RESET}</a>
+    </fieldset>
+</form>
+
+<p><!-- IF S_HAS_ACTIVE_ARTICLE_FILTERS -->{L_ACP_HELPDESKKB_FILTER_RESULTS}{L_COLON} {ARTICLE_FILTER_RESULTS}<!-- ELSE -->{L_ACP_HELPDESKKB_ARTICLE_LIST_TOTAL}{L_COLON} {ARTICLE_FILTER_RESULTS}<!-- ENDIF --></p>
+
+<p>{L_ACP_HELPDESKKB_LIST_RANGE}{L_COLON} {ARTICLE_RESULTS_FROM}&ndash;{ARTICLE_RESULTS_TO} / {ARTICLE_RESULTS_TOTAL}</p>
+
+<!-- IF S_HAS_ARTICLE_PAGINATION -->
+<div class="pagination" style="margin: 0 0 10px;">
+    <!-- IF S_HAS_ARTICLE_PREV_PAGE --><a href="{U_ARTICLE_PAGE_PREV}">{L_PREVIOUS}</a><!-- ENDIF -->
+    <!-- BEGIN article_page_rows -->
+        <!-- IF article_page_rows.S_CURRENT --><strong>{article_page_rows.PAGE_NUMBER}</strong><!-- ELSE --><a href="{article_page_rows.U_PAGE}">{article_page_rows.PAGE_NUMBER}</a><!-- ENDIF -->
+    <!-- END article_page_rows -->
+    <!-- IF S_HAS_ARTICLE_NEXT_PAGE --><a href="{U_ARTICLE_PAGE_NEXT}">{L_NEXT}</a><!-- ENDIF -->
+</div>
+<!-- ENDIF -->
+
+<table class="table1 zebra-table fixed-width-table">
+    <thead>
+        <tr>
+            <th>{L_ACP_HELPDESKKB_ARTICLE_TITLE}</th>
+            <th>{L_ACP_HELPDESKKB_CATEGORY}</th>
+            <th>{L_ACP_HELPDESKKB_TARGET}</th>
+            <th>{L_ACP_HELPDESKKB_SORT_ORDER}</th>
+            <th>{L_ACP_HELPDESKKB_ARTICLE_VIEWS}</th>
+            <th>{L_ACP_HELPDESKKB_ARTICLE_HELPFUL}</th>
+            <th>{L_ACP_HELPDESKKB_ENABLED}</th>
+            <th>{L_ACP_HELPDESKKB_ORDER}</th>
+            <th>{L_ACTION}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- IF S_HAS_ARTICLES -->
+        <!-- BEGIN article_rows -->
+        <tr>
+            <td>{article_rows.ARTICLE_TITLE}</td>
+            <td>{article_rows.CATEGORY_NAME}</td>
+            <td>{article_rows.TARGET_LABEL}</td>
+            <td>{article_rows.SORT_ORDER}</td>
+            <td>{article_rows.ARTICLE_VIEWS}</td>
+            <td>{article_rows.ARTICLE_HELPFUL}</td>
+            <td>{article_rows.ARTICLE_ENABLED}</td>
+            <td style="white-space: nowrap; text-align: center;">
+                <!-- IF not article_rows.S_FIRST_ROW --><a href="{article_rows.U_MOVE_UP}" title="{L_ACP_HELPDESKKB_MOVE_UP}">{L_ACP_HELPDESKKB_MOVE_UP_SHORT}</a><!-- ELSE -->&ndash;<!-- ENDIF -->
+                &nbsp;
+                <!-- IF not article_rows.S_LAST_ROW --><a href="{article_rows.U_MOVE_DOWN}" title="{L_ACP_HELPDESKKB_MOVE_DOWN}">{L_ACP_HELPDESKKB_MOVE_DOWN_SHORT}</a><!-- ELSE -->&ndash;<!-- ENDIF -->
+            </td>
+            <td>
+                <a href="{article_rows.U_EDIT}">{L_EDIT}</a>
+                <!-- IF article_rows.S_CAN_VIEW --> &nbsp;|&nbsp; <a href="{article_rows.U_VIEW}" target="_blank" rel="noopener">{L_ACP_HELPDESKKB_VIEW_ARTICLE}</a><!-- ENDIF -->
+            </td>
+        </tr>
+        <!-- END article_rows -->
+        <!-- ELSE -->
+        <tr>
+            <td colspan="9">{L_ACP_HELPDESKKB_NO_ARTICLES}</td>
+        </tr>
+        <!-- ENDIF -->
+    </tbody>
+</table>
+
+<!-- IF S_HAS_ARTICLE_PAGINATION -->
+<div class="pagination" style="margin: 10px 0 0;">
+    <!-- IF S_HAS_ARTICLE_PREV_PAGE --><a href="{U_ARTICLE_PAGE_PREV}">{L_PREVIOUS}</a><!-- ENDIF -->
+    <!-- BEGIN article_page_rows -->
+        <!-- IF article_page_rows.S_CURRENT --><strong>{article_page_rows.PAGE_NUMBER}</strong><!-- ELSE --><a href="{article_page_rows.U_PAGE}">{article_page_rows.PAGE_NUMBER}</a><!-- ENDIF -->
+    <!-- END article_page_rows -->
+    <!-- IF S_HAS_ARTICLE_NEXT_PAGE --><a href="{U_ARTICLE_PAGE_NEXT}">{L_NEXT}</a><!-- ENDIF -->
+</div>
+<!-- ENDIF -->
+
+<!-- ENDIF -->
+
+<!-- IF S_TAB_ARTICLE_NEW -->
+<h2>{ARTICLE_FORM_TITLE}</h2>
+<p>{L_ACP_HELPDESKKB_NEW_ARTICLE_EXPLAIN}</p>
+
+<div class="submit-buttons" style="margin: 0 0 12px;">
+    <a class="button2" href="{U_ARTICLE_LIST}">{L_ACP_HELPDESKKB_TAB_ARTICLES}</a>
+</div>
+
+<form id="acp_helpdeskkb_articles" method="post" action="{U_ACTION}">
+    <fieldset>
+        <legend>{ARTICLE_FORM_TITLE}</legend>
+        <dl>
+            <dt><label for="article_category_id">{L_ACP_HELPDESKKB_CATEGORY}</label></dt>
+            <dd>
+                <select id="article_category_id" name="article_category_id">
+                    <option value="0">{L_ACP_HELPDESKKB_SELECT_CATEGORY}</option>
+                    <!-- BEGIN article_category_options -->
+                    <option value="{article_category_options.VALUE}"<!-- IF article_category_options.S_SELECTED --> selected="selected"<!-- ENDIF -->>{article_category_options.LABEL}</option>
+                    <!-- END article_category_options -->
+                </select>
+            </dd>
+        </dl>
+        <dl>
+            <dt><label for="article_title">{L_ACP_HELPDESKKB_ARTICLE_TITLE}</label></dt>
+            <dd><input type="text" class="medium" id="article_title" name="article_title" value="{ARTICLE_TITLE}"></dd>
+        </dl>
+        <dl>
+            <dt><label for="article_slug">{L_ACP_HELPDESKKB_ARTICLE_SLUG}</label></dt>
+            <dd><input type="text" class="medium" id="article_slug" name="article_slug" value="{ARTICLE_SLUG}"><br><span>{L_ACP_HELPDESKKB_ARTICLE_SLUG_EXPLAIN}</span></dd>
+        </dl>
+        <dl>
+            <dt><label for="article_summary">{L_ACP_HELPDESKKB_ARTICLE_SUMMARY}</label></dt>
+            <dd><textarea id="article_summary" name="article_summary" rows="3" cols="60">{ARTICLE_SUMMARY}</textarea><br><span>{L_ACP_HELPDESKKB_ARTICLE_SUMMARY_EXPLAIN}</span></dd>
+        </dl>
+        <dl>
+            <dt><label for="article_text">{L_ACP_HELPDESKKB_ARTICLE_TEXT}</label><br><span>{L_ACP_HELPDESKKB_ARTICLE_TEXT_EXPLAIN}</span></dt>
+            <dd>
+                <div class="helpdeskkb-bbcode-toolbar">
+                    <input class="button2" type="button" value="{L_ACP_HELPDESKKB_BBCODE_BOLD}" onclick="helpdeskkbInsertTags('[b]', '[/b]');">
+                    <input class="button2" type="button" value="{L_ACP_HELPDESKKB_BBCODE_ITALIC}" onclick="helpdeskkbInsertTags('[i]', '[/i]');">
+                    <input class="button2" type="button" value="{L_ACP_HELPDESKKB_BBCODE_UNDERLINE}" onclick="helpdeskkbInsertTags('[u]', '[/u]');">
+                    <input class="button2" type="button" value="{L_ACP_HELPDESKKB_BBCODE_QUOTE}" onclick="helpdeskkbInsertTags('[quote]', '[/quote]');">
+                    <input class="button2" type="button" value="{L_ACP_HELPDESKKB_BBCODE_CODE}" onclick="helpdeskkbInsertTags('[code]', '[/code]');">
+                    <input class="button2" type="button" value="{L_ACP_HELPDESKKB_BBCODE_LIST}" onclick="helpdeskkbInsertList();">
+                    <input class="button2" type="button" value="{L_ACP_HELPDESKKB_BBCODE_URL}" onclick="helpdeskkbInsertUrl();">
+                    <input class="button2" type="button" value="{L_ACP_HELPDESKKB_BBCODE_IMAGE}" onclick="helpdeskkbInsertImage();">
+                </div>
+                <textarea id="article_text" name="article_text" rows="12" cols="80">{ARTICLE_TEXT}</textarea>
+                <br><span>{L_ACP_HELPDESKKB_BBCODE_HELP}</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt><label for="article_keywords">{L_ACP_HELPDESKKB_ARTICLE_KEYWORDS}</label><br><span>{L_ACP_HELPDESKKB_ARTICLE_KEYWORDS_EXPLAIN}</span></dt>
+            <dd><input type="text" class="medium" id="article_keywords" name="article_keywords" value="{ARTICLE_KEYWORDS}"></dd>
+        </dl>
+        <dl>
+            <dt><label for="article_forum_id">{L_ACP_HELPDESKKB_FORUM_ID}</label><br><span>{L_ACP_HELPDESKKB_TARGET_ARTICLE_EXPLAIN}</span></dt>
+            <dd><input type="number" id="article_forum_id" name="article_forum_id" value="{ARTICLE_FORUM_ID}"></dd>
+        </dl>
+        <dl>
+            <dt><label for="article_department_key">{L_ACP_HELPDESKKB_DEPARTMENT_KEY}</label><br><span>{L_ACP_HELPDESKKB_TARGET_ARTICLE_EXPLAIN}</span></dt>
+            <dd><input type="text" class="medium" id="article_department_key" name="article_department_key" value="{ARTICLE_DEPARTMENT_KEY}"></dd>
+        </dl>
+        <dl>
+            <dt><label>{L_ACP_HELPDESKKB_TARGET}</label></dt>
+            <dd>{ARTICLE_TARGET_SUMMARY}</dd>
+        </dl>
+        <dl>
+            <dt><label for="article_sort_order">{L_ACP_HELPDESKKB_SORT_ORDER}</label></dt>
+            <dd><input type="number" id="article_sort_order" name="article_sort_order" value="{ARTICLE_SORT_ORDER}"></dd>
+        </dl>
+        <dl>
+            <dt><label>{L_ACP_HELPDESKKB_ENABLED}</label></dt>
+            <dd>
+                <label><input type="radio" name="article_enabled" value="1"<!-- IF ARTICLE_ENABLED_BOOL --> checked="checked"<!-- ENDIF -->> {L_YES}</label>
+                <label><input type="radio" name="article_enabled" value="0"<!-- IF not ARTICLE_ENABLED_BOOL --> checked="checked"<!-- ENDIF -->> {L_NO}</label>
+            </dd>
+        </dl>
+        <input type="hidden" name="article_id" value="{ARTICLE_ID}">
+    </fieldset>
+    <fieldset class="submit-buttons">
+        <input class="button1" type="submit" name="save_article" value="<!-- IF S_EDIT_ARTICLE -->{L_ACP_HELPDESKKB_SAVE}<!-- ELSE -->{L_ACP_HELPDESKKB_ADD}<!-- ENDIF -->">
+        <!-- IF S_EDIT_ARTICLE -->
+        <input class="button2" type="submit" name="delete_article" value="{L_DELETE}" onclick="return confirm('{LA_ACP_HELPDESKKB_CONFIRM_DELETE_ARTICLE}');">
+        <!-- ENDIF -->
+        <a class="button2" href="<!-- IF S_EDIT_ARTICLE -->{U_ARTICLE_LIST}<!-- ELSE -->{U_ARTICLE_RESET}<!-- ENDIF -->">{L_CANCEL}</a>
+        {S_FORM_TOKEN}
+    </fieldset>
+</form>
+
+<!-- IF S_ARTICLE_PREVIEW -->
+<fieldset>
+    <legend>{L_ACP_HELPDESKKB_ARTICLE_PREVIEW}</legend>
+    <div class="postbody">
+        {ARTICLE_PREVIEW_HTML}
+    </div>
+</fieldset>
+<!-- ENDIF -->
+<!-- ENDIF -->
+
+<style>
+.helpdeskkb-bbcode-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 8px;
+}
+
+.helpdeskkb-bbcode-toolbar .button2 {
+    min-width: 38px;
+}
+</style>
+
+<script>
+function helpdeskkbTextarea() {
+    return document.getElementById('article_text');
+}
+
+function helpdeskkbInsertAtCaret(textarea, text) {
+    if (!textarea) {
+        return;
+    }
+
+    var start = textarea.selectionStart || 0;
+    var end = textarea.selectionEnd || 0;
+    var value = textarea.value || '';
+    textarea.value = value.substring(0, start) + text + value.substring(end);
+    textarea.focus();
+    var pos = start + text.length;
+    textarea.selectionStart = pos;
+    textarea.selectionEnd = pos;
+}
+
+function helpdeskkbWrapSelection(textarea, openTag, closeTag, defaultText) {
+    if (!textarea) {
+        return;
+    }
+
+    var start = textarea.selectionStart || 0;
+    var end = textarea.selectionEnd || 0;
+    var value = textarea.value || '';
+    var selected = value.substring(start, end);
+    var middle = selected.length ? selected : (defaultText || '');
+    var replacement = openTag + middle + closeTag;
+
+    textarea.value = value.substring(0, start) + replacement + value.substring(end);
+    textarea.focus();
+
+    if (selected.length > 0) {
+        textarea.selectionStart = start + openTag.length;
+        textarea.selectionEnd = start + openTag.length + selected.length;
+    } else {
+        var selStart = start + openTag.length;
+        var selEnd = selStart + middle.length;
+        textarea.selectionStart = selStart;
+        textarea.selectionEnd = selEnd;
+    }
+}
+
+function helpdeskkbInsertTags(openTag, closeTag, defaultText) {
+    helpdeskkbWrapSelection(helpdeskkbTextarea(), openTag, closeTag, defaultText || '');
+}
+
+function helpdeskkbInsertUrl() {
+    var textarea = helpdeskkbTextarea();
+    if (!textarea) {
+        return;
+    }
+
+    var url = window.prompt('{LA_ACP_HELPDESKKB_BBCODE_PROMPT_URL}', 'https://');
+    if (!url) {
+        return;
+    }
+
+    helpdeskkbWrapSelection(textarea, '[url=' + url + ']', '[/url]', 'texto');
+}
+
+function helpdeskkbInsertImage() {
+    var textarea = helpdeskkbTextarea();
+    if (!textarea) {
+        return;
+    }
+
+    var url = window.prompt('{LA_ACP_HELPDESKKB_BBCODE_PROMPT_IMAGE}', 'https://');
+    if (!url) {
+        return;
+    }
+
+    helpdeskkbInsertAtCaret(textarea, '[img]' + url + '[/img]');
+}
+
+function helpdeskkbInsertList() {
+    var textarea = helpdeskkbTextarea();
+    if (!textarea) {
+        return;
+    }
+
+    var block = '[list]\n[*] \n[/list]';
+    helpdeskkbInsertAtCaret(textarea, block);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    var titleField = document.getElementById('article_title');
+    var slugField = document.getElementById('article_slug');
+    if (!titleField || !slugField) {
+        return;
+    }
+
+    var slugTouched = slugField.value.trim() !== '';
+    slugField.addEventListener('input', function () {
+        slugTouched = slugField.value.trim() !== '';
+    });
+
+    titleField.addEventListener('input', function () {
+        if (slugTouched) {
+            return;
+        }
+
+        var slug = titleField.value
+            .toLowerCase()
+            .normalize('NFD').replace(/[̀-ͯ]/g, '')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '')
+            .replace(/-{2,}/g, '-');
+
+        slugField.value = slug;
+    });
+});
+</script>
+
+<!-- INCLUDE overall_footer.html -->
