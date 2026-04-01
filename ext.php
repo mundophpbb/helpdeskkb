@@ -13,65 +13,85 @@ class ext extends \phpbb\extension\base
 
     public function purge_step($old_state)
     {
+        // Manual purge hotfix: bypass the phpBB migrator for this extension because
+        // previously-installed menu migrations can fail to revert safely after many
+        // ACP menu reorders. We remove only this extension's data and state.
         if ($old_state === false || $old_state === '')
         {
-            $this->cleanup_helpdeskkb_acp_modules();
-            return 'helpdeskkb_cleanup_modules';
+            $this->manual_purge_helpdeskkb();
         }
 
-        return parent::purge_step($old_state);
+        return false;
     }
 
-    protected function cleanup_helpdeskkb_acp_modules()
+    protected function manual_purge_helpdeskkb()
     {
         $db = $this->get_container_service('dbal.conn');
-        $module_manager = $this->get_container_service('module.manager');
-        $modules_table = $this->get_modules_table();
-
-        if (!$db || !$module_manager || $modules_table === '')
+        if (!$db)
         {
             return;
         }
 
-        $sql = 'SELECT module_id, left_id, right_id
-            FROM ' . $modules_table . "
-            WHERE module_class = 'acp'
-                AND (
-                    module_basename = '" . $db->sql_escape(self::ACP_MODULE_BASENAME) . "'
-                    OR module_langname = '" . $db->sql_escape(self::ACP_CATEGORY_LANG) . "'
-                )
-            ORDER BY (right_id - left_id) ASC, left_id DESC";
-        $result = $db->sql_query($sql);
-        $module_rows = [];
-        while ($row = $db->sql_fetchrow($result))
-        {
-            $module_rows[] = $row;
-        }
-        $db->sql_freeresult($result);
+        $modules_table = $this->get_table_name('modules');
+        $config_table = $this->get_table_name('config');
+        $migrations_table = $this->get_table_name('migrations');
+        $categories_table = $this->get_table_name('helpdesk_kb_categories');
+        $articles_table = $this->get_table_name('helpdesk_kb_articles');
 
-        foreach ($module_rows as $row)
+        if ($modules_table !== '')
         {
+            $this->raw_cleanup_module_subtrees(
+                $db,
+                $modules_table,
+                "module_class = 'acp' AND module_basename = '" . $db->sql_escape(self::ACP_MODULE_BASENAME) . "'"
+            );
+
+            $this->raw_cleanup_module_subtrees(
+                $db,
+                $modules_table,
+                "module_class = 'acp' AND module_langname = '" . $db->sql_escape(self::ACP_CATEGORY_LANG) . "'"
+            );
+        }
+
+        if ($config_table !== '')
+        {
+            $db->sql_query('DELETE FROM ' . $config_table . "
+                WHERE config_name LIKE '" . $db->sql_escape('helpdeskkb_') . "%'"
+            );
+        }
+
+        if ($migrations_table !== '')
+        {
+            $migration_classes = [
+                '\\mundophpbb\\helpdeskkb\\migrations\\v1000_install',
+                '\\mundophpbb\\helpdeskkb\\migrations\\v1001_mode',
+                '\\mundophpbb\\helpdeskkb\\migrations\\v1002_article_menu',
+                '\\mundophpbb\\helpdeskkb\\migrations\\v1003_category_menu',
+                '\\mundophpbb\\helpdeskkb\\migrations\\v1004_menu_order',
+                '\\mundophpbb\\helpdeskkb\\migrations\\v1005_stats_menu',
+                '\\mundophpbb\\helpdeskkb\\migrations\\v1006_menu_finish',
+            ];
+
+            $db->sql_query('DELETE FROM ' . $migrations_table . '
+                WHERE ' . $db->sql_in_set('migration_name', array_map('strval', $migration_classes)));
+        }
+
+        foreach ([$articles_table, $categories_table] as $table_name)
+        {
+            if ($table_name === '')
+            {
+                continue;
+            }
+
             try
             {
-                $module_manager->delete_module((int) $row['module_id'], 'acp');
+                $db->sql_query('DROP TABLE IF EXISTS ' . $table_name);
             }
             catch (\Throwable $e)
             {
-                // Raw fallback below will clean any leftover rows or broken trees.
+                // Ignore drop failures; this is best-effort cleanup.
             }
         }
-
-        $this->raw_cleanup_module_subtrees(
-            $db,
-            $modules_table,
-            "module_class = 'acp' AND module_langname = '" . $db->sql_escape(self::ACP_CATEGORY_LANG) . "'"
-        );
-
-        $this->raw_cleanup_module_subtrees(
-            $db,
-            $modules_table,
-            "module_class = 'acp' AND module_basename = '" . $db->sql_escape(self::ACP_MODULE_BASENAME) . "'"
-        );
 
         $this->clear_module_cache();
     }
@@ -174,23 +194,38 @@ class ext extends \phpbb\extension\base
         }
     }
 
-    protected function get_modules_table()
+    protected function get_table_name($table_key)
     {
-        if (defined('MODULES_TABLE'))
+        $map = [
+            'modules' => ['constant' => 'MODULES_TABLE', 'suffix' => 'modules', 'parameter' => 'tables.modules'],
+            'config' => ['constant' => 'CONFIG_TABLE', 'suffix' => 'config', 'parameter' => 'tables.config'],
+            'migrations' => ['constant' => null, 'suffix' => 'migrations', 'parameter' => 'tables.migrations'],
+            'helpdesk_kb_categories' => ['constant' => null, 'suffix' => 'helpdesk_kb_categories', 'parameter' => null],
+            'helpdesk_kb_articles' => ['constant' => null, 'suffix' => 'helpdesk_kb_articles', 'parameter' => null],
+        ];
+
+        if (!isset($map[$table_key]))
         {
-            return MODULES_TABLE;
+            return '';
+        }
+
+        $meta = $map[$table_key];
+
+        if (!empty($meta['constant']) && defined($meta['constant']))
+        {
+            return constant($meta['constant']);
         }
 
         try
         {
-            if (method_exists($this->container, 'hasParameter') && $this->container->hasParameter('tables.modules'))
+            if (!empty($meta['parameter']) && method_exists($this->container, 'hasParameter') && $this->container->hasParameter($meta['parameter']))
             {
-                return (string) $this->container->getParameter('tables.modules');
+                return (string) $this->container->getParameter($meta['parameter']);
             }
 
             if (method_exists($this->container, 'hasParameter') && $this->container->hasParameter('core.table_prefix'))
             {
-                return (string) $this->container->getParameter('core.table_prefix') . 'modules';
+                return (string) $this->container->getParameter('core.table_prefix') . $meta['suffix'];
             }
         }
         catch (\Throwable $e)
@@ -198,6 +233,6 @@ class ext extends \phpbb\extension\base
             // Fall through to safe default.
         }
 
-        return 'phpbb_modules';
+        return 'phpbb_' . $meta['suffix'];
     }
 }
