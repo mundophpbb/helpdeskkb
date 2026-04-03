@@ -15,7 +15,7 @@ if (empty($lang) || !is_array($lang))
 }
 
 $lang = array_merge($lang, [
-    'HELPDESKKB_TITLE' => 'Base de Conhecimento do Help Desk',
+    'HELPDESKKB_TITLE' => 'KB + Help Desk',
     'HELPDESKKB_EXPLAIN' => 'Consulte artigos de suporte e soluções comuns antes de abrir ou tratar um ticket.',
     'HELPDESKKB_NO_CATEGORIES' => 'Nenhuma categoria foi criada ainda.',
     'HELPDESKKB_NO_ARTICLES' => 'Não há artigos disponíveis nesta categoria.',
